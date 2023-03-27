@@ -61,7 +61,9 @@ const player = new Player({
         y: 0,
     },
     collisionBlocks,
-    imageSrc: './img/warrior/Idle.png'
+    imageSrc: './img/warrior/Idle.png',
+    frameRate:8,
+
 })
 
 let y = 100
@@ -143,5 +145,5 @@ window.addEventListener('keyup', (event) => {
 })
 
 
-//https://youtu.be/rTVoyWu8r6g?t=6253
+//https://youtu.be/rTVoyWu8r6g?t=7530
 

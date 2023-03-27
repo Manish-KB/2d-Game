@@ -1,18 +1,42 @@
 class Sprite {
-    constructor({ position, imageSrc }) {
+    constructor({ position, imageSrc, frameRate = 1 }) {
         this.position = position
         this.image = new Image()
         this.image.src = imageSrc
-        this.image.onload=()=>{
-            this.width=this.image.width
-            this.height=this.image.height
+        this.frameRate = frameRate
+        this.image.onload = () => {
+            this.width = this.image.width / this.frameRate
+            this.height = this.image.height
+            
         }
         
-        
+
+
     }
     draw() {
         if (!this.image) return
-        c.drawImage(this.image, this.position.x, this.position.y)
+        const cropbox = {
+            position: {
+                x: 0,
+                y: 0,
+            },
+            width: this.image.width / this.frameRate,
+            height: this.image.height,
+        }
+
+        c.drawImage(
+            this.image,
+            cropbox.position.x,
+            cropbox.position.y,
+            cropbox.width,
+            cropbox.height,
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height,)
+
+
+
     };
     update() {
         this.draw()
