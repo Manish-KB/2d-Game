@@ -1,5 +1,5 @@
 class Player extends Sprite {
-    constructor({ position, collisionBlocks, platformCollisionBlocks, imageSrc, frameRate, scale = 0.5, animations }) {
+    constructor({ position, collisionBlocks,platformCollisionBlocks, imageSrc, frameRate, scale = 0.5, animations }) {
         super({ imageSrc, frameRate, scale })
         this.position = position
         this.velocity = {
@@ -17,14 +17,6 @@ class Player extends Sprite {
             const image = new Image
             image.src = this.animations[key].imageSrc
             this.animations[key].image = image
-        }
-        this.camerabox = {
-            position: {
-                x: this.position.x,
-                y: this.position.y,
-            },
-            width: 200,
-            height: 80
         }
 
     }
@@ -52,8 +44,7 @@ class Player extends Sprite {
     update() {
         this.updatehitbx()
 
-        c.fillStyle = 'rgba(255,0,0,0.2)'
-        c.fillRect(this.camerabox.position.x, this.camerabox.position.y, this.camerabox.width, this.camerabox.height)
+
 
         // c.fillStyle = 'rgba(0,255,0,0.2)'
         // c.fillRect(this.position.x, this.position.y, this.width, this.height)
@@ -64,53 +55,12 @@ class Player extends Sprite {
         this.draw()
         this.position.x += this.velocity.x
         this.updatehitbx()
-        this.updateCameraBox()
         this.checkForHorizontalCollisions()
         this.applyGravity()
         this.updatehitbx()
         this.checkForVerticalCollisions()
 
     }
-
-
-    updateCameraBox() {
-
-        this.camerabox = {
-            position: {
-                x: this.position.x - 60,
-                y: this.position.y,
-            },
-            width: 200,
-            height: 80
-        }
-
-    }
-
-    shouldPanCameraToTheLeft({canvas,camera}) {
-        const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width
-        
-       
-        if(cameraboxRightSide>=576) return
-        if (cameraboxRightSide >= canvas.width / 4 + Math.abs(camera.position.x)) {
-          
-            // camera.position.x -= this.velocity.x
-            camera.position.x -= 2
-         
-        }
-    }
-    shouldPanCameraToTheRight({canvas,camera}) {
-       
-   
-       
-        if(this.camerabox.position.x<=0) return
-        if (this.camerabox.position.x <=  Math.abs(camera.position.x)) {
-          
-            // camera.position.x -= this.velocity.x
-            camera.position.x += 2
-      
-        }
-    }
-
     checkForHorizontalCollisions() {
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const collisionBlock = this.collisionBlocks[i]
@@ -183,7 +133,7 @@ class Player extends Sprite {
                     this.position.y = platformCollisionBlock.position.y - offset - 0.01
                     break
                 }
-
+               
 
 
             }
@@ -191,5 +141,5 @@ class Player extends Sprite {
     }
 
 
-
+    
 }
