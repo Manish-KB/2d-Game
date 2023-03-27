@@ -5,13 +5,15 @@ class Sprite {
         this.image = new Image()
         this.image.src = imageSrc
         this.frameRate = frameRate
+        this.loaded=false
         this.image.onload = () => {
             this.width = (this.image.width / this.frameRate)*this.scale
             this.height = this.image.height *this.scale
+            this.loaded=true
            
 
         }
-        this.frameBuffer = 5
+        this.frameBuffer = 6
         this.elapsedFrames = 0
         this.currentFrame = 0
 

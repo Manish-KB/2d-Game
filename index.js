@@ -36,7 +36,7 @@ floorCollisions2D.forEach((row, y) => {
     })
 })
 
-const platformCollisionBlocks=[]
+const platformCollisionBlocks = []
 platformCollisions2d.forEach((row, y) => {
     row.forEach((symbol, x) => {
         if (symbol === 202) {
@@ -56,13 +56,42 @@ platformCollisions2d.forEach((row, y) => {
 
 
 const player = new Player({
-    position : {
+    position: {
         x: 100,
-        y: 0,
+        y: 300,
     },
     collisionBlocks,
     imageSrc: './img/warrior/Idle.png',
-    frameRate:8,
+    frameRate: 8,
+    animations: {
+        Idle: {
+            imageSrc: './img/warrior/Idle.png',
+            frameRate: 8,
+            frameBuffer: 7,
+        },
+        Run: {
+            imageSrc: './img/warrior/Run.png',
+            frameRate: 8,
+            frameBuffer: 7,
+        },
+        Jump: {
+            imageSrc: './img/warrior/Jump.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        Fall: {
+            imageSrc: './img/warrior/Fall.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        FallLeft: {
+            imageSrc: './img/warrior/FallLeft.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+
+
+    }
 
 })
 
@@ -97,7 +126,7 @@ function animate() {
     c.translate(0, -background.image.height + scaledCanvas.height)
     background.update()
 
-    
+
     collisionBlocks.forEach((collisionBlock) => {
         collisionBlock.update()
     })
@@ -105,17 +134,32 @@ function animate() {
     platformCollisionBlocks.forEach((collisionBlock) => {
         collisionBlock.update()
     })
-  
+
     player.update()
     player.velocity.x = 0
-    if (keys.d.pressed)
+    if (keys.d.pressed) {
+        player.switchSprite('Run')
         player.velocity.x = 2
-    else if (keys.a.pressed)
+        player.lastDirection='right'
+    }
+
+    else if (keys.a.pressed) {
         player.velocity.x = -2
+        player.lastDirection='left'
+    }
+    else if (player.velocity.y === 0) { player.switchSprite('Idle') }
+
+    if (player.velocity.y < 0) { player.switchSprite('Jump') }
+    else if (player.velocity.y > 0) {
+        if (player.lastDirection === 'right')
+            player.switchSprite('Fall')
+        else
+            player.switchSprite('FallLeft')
+    }
     player.updateFrames()
     c.restore()
 
-   
+
 
 
 
