@@ -1,25 +1,26 @@
 class Player extends Sprite {
-    constructor({ position, collisionBlocks, imageSrc, frameRate, scale = 0.5 ,animations}) {
+    constructor({ position, collisionBlocks,platformCollisionBlocks, imageSrc, frameRate, scale = 0.5, animations }) {
         super({ imageSrc, frameRate, scale })
         this.position = position
         this.velocity = {
             x: 0,
             y: 1,
-            
+
         }
         // this.height = 25
         // this.width = 25
         this.collisionBlocks = collisionBlocks
-        this.animations=animations
-        this.lastDirection='right'
-        for(let key in this.animations){
-            const image= new Image
-            image.src=this.animations[key].imageSrc
-            this.animations[key].image=image
+        this.platformCollisionBlocks = platformCollisionBlocks
+        this.animations = animations
+        this.lastDirection = 'right'
+        for (let key in this.animations) {
+            const image = new Image
+            image.src = this.animations[key].imageSrc
+            this.animations[key].image = image
         }
 
     }
-   
+
     updatehitbx() {
         this.hitbox = {
             position: {
@@ -31,14 +32,14 @@ class Player extends Sprite {
         }
     }
 
-switchSprite(key)
-{   if(this.image===this.animations[key].image || !this.loaded) return
-    this.currentFrame=0
-    this.image=this.animations[key].image
-    this.frameBuffer=this.animations[key].frameBuffer
-    this.frameRate=this.animations[key].frameRate
+    switchSprite(key) {
+        if (this.image === this.animations[key].image || !this.loaded) return
+        this.currentFrame = 0
+        this.image = this.animations[key].image
+        this.frameBuffer = this.animations[key].frameBuffer
+        this.frameRate = this.animations[key].frameRate
 
-}
+    }
 
     update() {
         this.updatehitbx()
@@ -91,7 +92,7 @@ switchSprite(key)
     applyGravity() {
         this.velocity.y += gravity
         this.position.y += this.velocity.y
-        
+
     }
     checkForVerticalCollisions() {
         for (let i = 0; i < this.collisionBlocks.length; i++) {
@@ -117,5 +118,28 @@ switchSprite(key)
 
             }
         }
+
+        // for platform
+        for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
+            const platformCollisionBlock = this.platformCollisionBlocks[i]
+            if (platformCollision({
+                object1: this.hitbox,
+                object2: platformCollisionBlock
+            })) {
+                if (this.velocity.y > 0) {
+                    this.velocity.y = 0
+                    const offset = this.hitbox.position.y - this.position.y + this.hitbox.height
+
+                    this.position.y = platformCollisionBlock.position.y - offset - 0.01
+                    break
+                }
+               
+
+
+            }
+        }
     }
+
+
+    
 }
