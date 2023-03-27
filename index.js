@@ -4,7 +4,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
-gravity = 0.5
+gravity = 0.4
 
 const scaledCanvas = {
     width: canvas.width / 4,
@@ -46,7 +46,7 @@ platformCollisions2d.forEach((row, y) => {
                         x: x * 16,
                         y: y * 16,
                     },
-                    height:4
+                    height: 4
                 })
             )
         }
@@ -131,7 +131,13 @@ background = new Sprite({
     },
     imageSrc: './img/background.png',
 })
-
+const backgroundImageHeight = 432
+const camera = {
+    position: {
+        x: 0,
+        y: -backgroundImageHeight + scaledCanvas.height,
+    },
+}
 function animate() {
     window.requestAnimationFrame(animate)
 
@@ -141,21 +147,26 @@ function animate() {
     c.save()
     c.scale(4, 4)
 
-    c.translate(0, -background.image.height + scaledCanvas.height)
+    c.translate(camera.position.x, camera.position.y)
+
     background.update()
 
 
-    collisionBlocks.forEach((collisionBlock) => {
-        collisionBlock.update()
-    })
+    // collisionBlocks.forEach((collisionBlock) => {
+    //     collisionBlock.update()
+    // })
 
-    platformCollisionBlocks.forEach((collisionBlock) => {
-        collisionBlock.update()
-    })
+    // platformCollisionBlocks.forEach((collisionBlock) => {
+    //     collisionBlock.update()
+    // })
+
 
     player.update()
+
     player.velocity.x = 0
     if (keys.d.pressed) {
+        player.shouldPanCameraToTheLeft({ canvas, camera })
+
         player.switchSprite('Run')
         player.velocity.x = 2
         player.lastDirection = 'right'
@@ -164,6 +175,8 @@ function animate() {
     else if (keys.a.pressed) {
         player.velocity.x = -2
         player.lastDirection = 'left'
+
+        player.shouldPanCameraToTheRight({ canvas, camera })
         player.switchSprite('RunLeft')
     }
     else if (player.velocity.y === 0) {
@@ -174,12 +187,14 @@ function animate() {
     }
 
     if (player.velocity.y < 0) {
-        if(player.lastDirection==='right')
-        player.switchSprite('Jump')
-        else 
-        player.switchSprite('JumpLeft')
+        player.shouldPanCameraDown({ camera, canvas })
+        if (player.lastDirection === 'right')
+            player.switchSprite('Jump')
+        else
+            player.switchSprite('JumpLeft')
     }
     else if (player.velocity.y > 0) {
+        player.shouldPanCameraUp({ camera, canvas })
         if (player.lastDirection === 'right')
             player.switchSprite('Fall')
         else
@@ -197,11 +212,14 @@ animate()
 window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'd': keys.d.pressed = true
+
             break
         case 'a': keys.a.pressed = true
             break
 
-        case 'w': player.velocity.y = -8
+        case 'w': player.velocity.y = -6
+            var soundEffect = new Audio("./music/jump.mp3")
+            soundEffect.play()
             break
     }
 })

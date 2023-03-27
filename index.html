@@ -6,8 +6,39 @@ body{
 }
 </style>
 
+<script>
+ var playerName = prompt("Enter your name:");
+alert("Welcome " + playerName + "!");
+    alert("Welcome to this Retro video game. This game has no levels and no tasks \uD83D\uDE43. It was made for testing purpose only. Don't forget to turn on the the music \uD83C\uDFB5");
+   
+</script>
 
+
+
+  
+
+  
+  
 <canvas > </canvas>
+<audio id="myAudio" autoplay loop>
+    <source src="./music/bg.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <button onclick="togglePlay()"><img src='./img/sound-effects.png' width="50"></button>
+
+  <script>
+    var audio = document.getElementById("myAudio");
+  
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  </script>
+
 <script src="./js/utils.js"></script>
 <script src="./js/classes/Sprite.js"></script>
 <script src="./js/classes/Player.js"></script>
