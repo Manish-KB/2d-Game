@@ -4,6 +4,23 @@
 body{
     background: black;
 }
+
+
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+button {
+  background-color: #f0f0f0;
+  color: #000;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 0 10px;
+}
+
 </style>
 
 <script>
@@ -13,9 +30,49 @@ body{
     alert("Welcome " + playerName + "!"+ " to this Retro video game. This game works only on a computer. This game has no levels and no tasks \uD83D\uDE43. It was made for testing purpose only. Don't forget to turn on the the music \uD83C\uDFB5");
    
 </script>
+//////////////////////////////////////////////
 
+<div id="button-container">
+  <button id="button-a">Left</button>
+<button id="button-d">Right</button>
+<button id="button-w">Jump</button>
 
-
+</div>
+<script>const buttonA = document.getElementById("button-a");
+  const buttonD = document.getElementById("button-d");
+  const buttonW = document.getElementById("button-w");
+  
+  buttonA.addEventListener("touchstart", () => {
+    // Simulate "a" key press
+    document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 65 }));
+  });
+  
+  buttonA.addEventListener("touchend", () => {
+    // Simulate "a" key release
+    document.dispatchEvent(new KeyboardEvent("keyup", { keyCode: 65 }));
+  });
+  
+  buttonD.addEventListener("touchstart", () => {
+    // Simulate "d" key press
+    document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 68 }));
+  });
+  
+  buttonD.addEventListener("touchend", () => {
+    // Simulate "d" key release
+    document.dispatchEvent(new KeyboardEvent("keyup", { keyCode: 68 }));
+  });
+  
+  buttonW.addEventListener("touchstart", () => {
+    // Simulate "w" key press
+    document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 87 }));
+  });
+  
+  buttonW.addEventListener("touchend", () => {
+    // Simulate "w" key release
+    document.dispatchEvent(new KeyboardEvent("keyup", { keyCode: 87 }));
+  });
+  </script>
+////////////////////////////
   
 
   
