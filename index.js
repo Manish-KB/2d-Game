@@ -4,7 +4,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
-gravity = 0.5
+gravity = 0.4
 
 const scaledCanvas = {
     width: canvas.width / 4,
@@ -131,7 +131,12 @@ background = new Sprite({
     },
     imageSrc: './img/background.png',
 })
-
+const camera={
+    position:{
+        x:0,
+        y:0,
+    },
+}
 function animate() {
     window.requestAnimationFrame(animate)
 
@@ -141,7 +146,8 @@ function animate() {
     c.save()
     c.scale(4, 4)
 
-    c.translate(0, -background.image.height + scaledCanvas.height)
+    c.translate(camera.position.x, -background.image.height + scaledCanvas.height)
+    console.log(camera.position.x)
     background.update()
 
 
@@ -156,6 +162,8 @@ function animate() {
     player.update()
     player.velocity.x = 0
     if (keys.d.pressed) {
+        player.shouldPanCameraToTheLeft({canvas,camera})
+       
         player.switchSprite('Run')
         player.velocity.x = 2
         player.lastDirection = 'right'
@@ -164,6 +172,7 @@ function animate() {
     else if (keys.a.pressed) {
         player.velocity.x = -2
         player.lastDirection = 'left'
+        player.shouldPanCameraToTheRight({canvas,camera})
         player.switchSprite('RunLeft')
     }
     else if (player.velocity.y === 0) {
@@ -201,7 +210,7 @@ window.addEventListener('keydown', (event) => {
         case 'a': keys.a.pressed = true
             break
 
-        case 'w': player.velocity.y = -8
+        case 'w': player.velocity.y = -6
             break
     }
 })
