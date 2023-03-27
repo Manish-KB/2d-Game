@@ -53,8 +53,8 @@ class Player extends Sprite {
     update() {
         this.updatehitbx()
 
-        c.fillStyle = 'rgba(255,0,0,0.2)'
-        c.fillRect(this.camerabox.position.x, this.camerabox.position.y, this.camerabox.width, this.camerabox.height)
+        // c.fillStyle = 'rgba(255,0,0,0.2)'
+        // c.fillRect(this.camerabox.position.x, this.camerabox.position.y, this.camerabox.width, this.camerabox.height)
 
         // c.fillStyle = 'rgba(0,255,0,0.2)'
         // c.fillRect(this.position.x, this.position.y, this.width, this.height)
@@ -64,6 +64,7 @@ class Player extends Sprite {
 
         this.draw()
         this.position.x += this.velocity.x
+        
         this.checkForHorizontalCanvasCollision()
         this.updatehitbx()
         this.updateCameraBox()
@@ -89,14 +90,13 @@ class Player extends Sprite {
 
     }
     checkForHorizontalCanvasCollision() {
-        if (this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
-            this.hitbox.position.x+this.velocity.x<=0) {
-            this.velocity.x = 0
-            console.log("Hello"+ this.velocity.x)
+        if (
+          this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
+          this.hitbox.position.x + this.velocity.x <= 0
+        ) {
+          this.velocity.x = 0
         }
-
-
-    }
+      }
     shouldPanCameraToTheLeft({ canvas, camera }) {
         const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width
 
@@ -164,7 +164,6 @@ class Player extends Sprite {
                 }
                 if (this.velocity.x < 0) {
                     this.velocity.x = 0
-                    this.velocity.x = 0
                     const offset = this.hitbox.position.x - this.position.x
                     this.position.x = collisionBlock.position.x + collisionBlock.width - offset + 0.01
                     break
@@ -230,3 +229,7 @@ class Player extends Sprite {
 
 
 }
+
+
+
+//https://youtu.be/rTVoyWu8r6g
