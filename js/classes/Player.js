@@ -1,6 +1,6 @@
 class Player extends Sprite{
-    constructor({ position, collisionBlocks, imageSrc,frameRate }) {
-        super({imageSrc,frameRate})
+    constructor({ position, collisionBlocks, imageSrc,frameRate,scale=0.5 }) {
+        super({imageSrc,frameRate,scale})
         this.position = position
         this.velocity = {
             x: 0,
@@ -9,7 +9,14 @@ class Player extends Sprite{
         // this.height = 25
         // this.width = 25
         this.collisionBlocks = collisionBlocks
-
+        this.hitbox={
+            position:{
+                x:this.position.x,
+                y:this.position.y
+            },
+            width:10,
+            height:10,
+        }
     }
 
     update() {

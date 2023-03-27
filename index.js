@@ -112,7 +112,7 @@ function animate() {
         player.velocity.x = 2
     else if (keys.a.pressed)
         player.velocity.x = -2
-
+    player.updateFrames()
     c.restore()
 
    
