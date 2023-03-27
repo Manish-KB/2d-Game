@@ -3,10 +3,11 @@ class Player extends Sprite {
         super({ imageSrc, frameRate, scale })
         this.position = position
         this.velocity = {
-            x: 0,
+            x: 6,
             y: 1,
 
         }
+        
         // this.height = 25
         // this.width = 25
         this.collisionBlocks = collisionBlocks
@@ -63,12 +64,14 @@ class Player extends Sprite {
 
         this.draw()
         this.position.x += this.velocity.x
+        this.checkForHorizontalCanvasCollision()
         this.updatehitbx()
         this.updateCameraBox()
         this.checkForHorizontalCollisions()
         this.applyGravity()
         this.updatehitbx()
         this.checkForVerticalCollisions()
+        
 
     }
 
@@ -85,29 +88,63 @@ class Player extends Sprite {
         }
 
     }
+    checkForHorizontalCanvasCollision() {
+        if (this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
+            this.hitbox.position.x+this.velocity.x<=0) {
+            this.velocity.x = 0
+            console.log("Hello"+ this.velocity.x)
+        }
 
-    shouldPanCameraToTheLeft({canvas,camera}) {
+
+    }
+    shouldPanCameraToTheLeft({ canvas, camera }) {
         const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width
-        
-       
-        if(cameraboxRightSide>=576) return
+
+
+        if (cameraboxRightSide >= 576) return
         if (cameraboxRightSide >= canvas.width / 4 + Math.abs(camera.position.x)) {
-          
+
             // camera.position.x -= this.velocity.x
             camera.position.x -= 2
-         
+
         }
     }
-    shouldPanCameraToTheRight({canvas,camera}) {
-       
-   
-       
-        if(this.camerabox.position.x<=0) return
-        if (this.camerabox.position.x <=  Math.abs(camera.position.x)) {
-          
+    shouldPanCameraToTheRight({ canvas, camera }) {
+
+
+
+        if (this.camerabox.position.x <= 0) return
+        if (this.camerabox.position.x <= Math.abs(camera.position.x)) {
+
             // camera.position.x -= this.velocity.x
             camera.position.x += 2
-      
+
+        }
+    }
+    shouldPanCameraDown({ canvas, camera }) {
+
+
+
+        if (this.camerabox.position.y + this.velocity.y<= 0) return
+
+        if (this.camerabox.position.y <= Math.abs(camera.position.y)) {
+
+            
+            camera.position.y -= this.velocity.y
+
+        }
+    }
+    shouldPanCameraUp({ canvas, camera }) {
+
+
+
+        if (this.camerabox.position.y +this.camerabox.height+ this.velocity.y>= 432) return
+
+        if (this.camerabox.position.y +this.camerabox.height>= Math.abs(camera.position.y) + canvas.height/4 ){
+
+            
+            camera.position.y -= this.velocity.y
+
         }
     }
 
