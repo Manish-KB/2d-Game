@@ -6,7 +6,29 @@ body{
 }
 
 
+#controls {
+			position: fixed;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1;
+			user-select: none;
+		}
 
+		.control-button {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			background-color: #fff;
+			color: #333;
+			font-size: 24px;
+			text-align: center;
+			line-height: 60px;
+			display: inline-block;
+			margin: 10px;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+			touch-action: manipulation;
+		}
 
 </style>
 
@@ -23,6 +45,13 @@ body{
   
   
 <canvas > </canvas>
+
+<div id="controls">
+  <div id="left" class="control-button">←</div>
+  <div id="up" class="control-button">↑</div>
+  <div id="right" class="control-button">→</div>
+</div>
+
 <audio id="myAudio" autoplay loop>
     <source src="./music/bg.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -40,6 +69,15 @@ body{
         audio.pause();
       }
     }
+
+
+
+		
+
+
+
+
+
   </script>
 
 <script src="./js/utils.js"></script>

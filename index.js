@@ -236,5 +236,32 @@ window.addEventListener('keyup', (event) => {
 })
 
 
+
+
+
+
+document.getElementById('left').addEventListener('mousedown', function() {
+    keys.a.pressed = true
+});
+document.getElementById('left').addEventListener('mouseup', function() {
+    keys.a.pressed = false
+});
+
+document.getElementById('up').addEventListener('mousedown', function() {
+    player.velocity.y = -6
+});
+
+
+document.getElementById('right').addEventListener('mousedown', function() {
+    keys.d.pressed = true
+});
+document.getElementById('right').addEventListener('mouseup', function() {
+    keys.d.pressed = false
+});
+
+
+
+
+
 //https://youtu.be/rTVoyWu8r6g?t=7530
 
